@@ -68,10 +68,12 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 	}
 	fmt.Fprint(&bf, " ")
 
-	if r.PC != 0 && h.opts.AddSource {
+	if r.PC != 0 {
 		f, _ := runtime.CallersFrames([]uintptr{r.PC}).Next()
 
-		switch h.opts.SrcFileLength {
+		switch h.opts.SrcFileMode {
+		case Nop:
+			break
 		case ShortFile:
 			fmt.Fprintf(&bf, "%s:%d ", filepath.Base(f.File), f.Line)
 		case LongFile:

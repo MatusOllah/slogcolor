@@ -6,10 +6,9 @@ import (
 )
 
 var DefaultOptions *Options = &Options{
-	Level:         slog.LevelInfo,
-	TimeFormat:    time.DateTime,
-	AddSource:     true,
-	SrcFileLength: ShortFile,
+	Level:       slog.LevelInfo,
+	TimeFormat:  time.DateTime,
+	SrcFileMode: ShortFile,
 }
 
 type Options struct {
@@ -21,9 +20,6 @@ type Options struct {
 	// The time format.
 	TimeFormat string
 
-	// Enable source code location / trace.
-	AddSource bool
-
-	// SrcFileLength is the source file length.
-	SrcFileLength SourceFileLength
+	// SrcFileMode is the source file mode.
+	SrcFileMode SourceFileMode
 }
