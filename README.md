@@ -1,4 +1,4 @@
-# slogcolor
+# 🌈 slogcolor
 
 ![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
 
