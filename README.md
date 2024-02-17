@@ -25,7 +25,7 @@ func main() {
 
     slog.Info("Initializing")
     slog.Debug("Init done", "duration", 500*time.Millisecond)
-    slog.Warn("Slow request!", "method", "GET", "path", "/api/users", "duration",   750*time.Millisecond)
+    slog.Warn("Slow request!", "method", "GET", "path", "/api/users", "duration", 750*time.Millisecond)
     slog.Error("DB connection lost!", "err", errors.New("connection reset"), "db", "horalky")
 }
 ```
