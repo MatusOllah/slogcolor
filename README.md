@@ -1,8 +1,8 @@
 # 🌈 slogcolor
 
-![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
-
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/slogcolor.svg)](https://pkg.go.dev/github.com/MatusOllah/slogcolor) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/slogcolor)](https://goreportcard.com/report/github.com/MatusOllah/slogcolor)
+
+![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
 
 **slogcolor** is a color handler for `log/slog`. It's output is inspired by XMRig and zerolog.
 
