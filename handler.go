@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"sync"
 
 	"github.com/fatih/color"
@@ -71,26 +72,51 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 	if r.PC != 0 {
 		f, _ := runtime.CallersFrames([]uintptr{r.PC}).Next()
 
+		var filename string
 		switch h.opts.SrcFileMode {
 		case Nop:
 			break
 		case ShortFile:
-			fmt.Fprintf(&bf, "%s:%d ", filepath.Base(f.File), f.Line)
+			filename = filepath.Base(f.File)
 		case LongFile:
-			fmt.Fprintf(&bf, "%s:%d ", f.File, f.Line)
+			filename = f.File
 		}
+		lineStr := fmt.Sprintf(":%d", f.Line)
+		formatted := fmt.Sprintf("%s ", filename+lineStr)
+		if h.opts.SrcFileLength > 0 {
+			maxFilenameLen := h.opts.SrcFileLength - len(lineStr) - 1
+			if len(filename) > maxFilenameLen {
+				filename = filename[:maxFilenameLen] // Truncate if too long
+			}
+			lenStr := strconv.Itoa(h.opts.SrcFileLength)
+			formatted = fmt.Sprintf("%-"+lenStr+"s", filename+lineStr)
+		}
+		fmt.Fprint(&bf, formatted)
 	}
 
-	fmt.Fprint(&bf, color.HiWhiteString("| "))
-
-	fmt.Fprint(&bf, r.Message)
-
+	//we need the attributes here, as we can print a longer string if there are no attributes
 	var attrs []slog.Attr
 	attrs = append(attrs, h.attrs...)
 	r.Attrs(func(a slog.Attr) bool {
 		attrs = append(attrs, a)
 		return true
 	})
+
+	fmt.Fprint(&bf, h.opts.MsgPrefix)
+	formattedMessage := fmt.Sprintf("%s", r.Message)
+	if h.opts.MsgLength > 0 && len(attrs) > 0 {
+		if len(formattedMessage) > h.opts.MsgLength {
+			formattedMessage = formattedMessage[:h.opts.MsgLength-1] + "…" // Truncate and add ellipsis if too long
+		} else {
+			// Pad with spaces if too short
+			lenStr := strconv.Itoa(h.opts.MsgLength)
+			formattedMessage = fmt.Sprintf("%-"+lenStr+"s", formattedMessage)
+		}
+	}
+	if h.opts.MsgColor == nil {
+		h.opts.MsgColor = color.New() //set to empty otherwise we have a null pointer
+	}
+	fmt.Fprintf(&bf, "%s", h.opts.MsgColor.Sprint(formattedMessage))
 
 	for _, a := range attrs {
 		fmt.Fprint(&bf, " ")
