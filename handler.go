@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/fatih/color"
@@ -126,7 +127,12 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 				fmt.Fprint(&bf, color.New(color.FgCyan).Sprint("."))
 			}
 		}
-		fmt.Fprint(&bf, color.New(color.FgCyan).Sprintf("%s=", a.Key)+a.Value.String())
+
+		if strings.Contains(a.Key, "err") {
+			fmt.Fprint(&bf, color.New(color.FgRed).Sprintf("%s=", a.Key)+a.Value.String())
+		} else {
+			fmt.Fprint(&bf, color.New(color.FgCyan).Sprintf("%s=", a.Key)+a.Value.String())
+		}
 	}
 
 	fmt.Fprint(&bf, "\n")
