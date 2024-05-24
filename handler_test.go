@@ -11,7 +11,9 @@ import (
 )
 
 func Example() {
-	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, slogcolor.DefaultOptions)))
+	opts := slogcolor.DefaultOptions
+	opts.Level = slog.LevelDebug
+	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 
 	slog.Info("Initializing")
 	slog.Debug("Init done", "duration", 500*time.Millisecond)
