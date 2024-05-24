@@ -104,7 +104,7 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 	})
 
 	fmt.Fprint(&bf, h.opts.MsgPrefix)
-	formattedMessage := fmt.Sprintf("%s", r.Message)
+	formattedMessage := r.Message
 	if h.opts.MsgLength > 0 && len(attrs) > 0 {
 		if len(formattedMessage) > h.opts.MsgLength {
 			formattedMessage = formattedMessage[:h.opts.MsgLength-1] + "…" // Truncate and add ellipsis if too long
