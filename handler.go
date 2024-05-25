@@ -70,29 +70,31 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 	}
 	fmt.Fprint(&bf, " ")
 
-	if r.PC != 0 {
-		f, _ := runtime.CallersFrames([]uintptr{r.PC}).Next()
+	if h.opts.SrcFileMode != Nop {
+		if r.PC != 0 {
+			f, _ := runtime.CallersFrames([]uintptr{r.PC}).Next()
 
-		var filename string
-		switch h.opts.SrcFileMode {
-		case Nop:
-			break
-		case ShortFile:
-			filename = filepath.Base(f.File)
-		case LongFile:
-			filename = f.File
-		}
-		lineStr := fmt.Sprintf(":%d", f.Line)
-		formatted := fmt.Sprintf("%s ", filename+lineStr)
-		if h.opts.SrcFileLength > 0 {
-			maxFilenameLen := h.opts.SrcFileLength - len(lineStr) - 1
-			if len(filename) > maxFilenameLen {
-				filename = filename[:maxFilenameLen] // Truncate if too long
+			var filename string
+			switch h.opts.SrcFileMode {
+			case Nop:
+				break
+			case ShortFile:
+				filename = filepath.Base(f.File)
+			case LongFile:
+				filename = f.File
 			}
-			lenStr := strconv.Itoa(h.opts.SrcFileLength)
-			formatted = fmt.Sprintf("%-"+lenStr+"s", filename+lineStr)
+			lineStr := fmt.Sprintf(":%d", f.Line)
+			formatted := fmt.Sprintf("%s ", filename+lineStr)
+			if h.opts.SrcFileLength > 0 {
+				maxFilenameLen := h.opts.SrcFileLength - len(lineStr) - 1
+				if len(filename) > maxFilenameLen {
+					filename = filename[:maxFilenameLen] // Truncate if too long
+				}
+				lenStr := strconv.Itoa(h.opts.SrcFileLength)
+				formatted = fmt.Sprintf("%-"+lenStr+"s", filename+lineStr)
+			}
+			fmt.Fprint(&bf, formatted)
 		}
-		fmt.Fprint(&bf, formatted)
 	}
 
 	//we need the attributes here, as we can print a longer string if there are no attributes
