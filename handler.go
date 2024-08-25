@@ -1,7 +1,6 @@
 package slogcolor
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -51,24 +50,25 @@ func (h *Handler) Enabled(_ context.Context, level slog.Level) bool {
 
 // Handle implements slog.Handler.Handle .
 func (h *Handler) Handle(_ context.Context, r slog.Record) error {
-	var bf bytes.Buffer
+	bf := getBuffer()
+	bf.Reset()
 
 	if !r.Time.IsZero() {
-		fmt.Fprint(&bf, color.New(color.Faint).Sprint(r.Time.Format(h.opts.TimeFormat)))
-		fmt.Fprint(&bf, " ")
+		fmt.Fprint(bf, color.New(color.Faint).Sprint(r.Time.Format(h.opts.TimeFormat)))
+		fmt.Fprint(bf, " ")
 	}
 
 	switch r.Level {
 	case slog.LevelDebug:
-		fmt.Fprint(&bf, color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"))
+		fmt.Fprint(bf, color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"))
 	case slog.LevelInfo:
-		fmt.Fprint(&bf, color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO "))
+		fmt.Fprint(bf, color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO "))
 	case slog.LevelWarn:
-		fmt.Fprint(&bf, color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN "))
+		fmt.Fprint(bf, color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN "))
 	case slog.LevelError:
-		fmt.Fprint(&bf, color.New(color.BgRed, color.FgHiWhite).Sprint("ERROR"))
+		fmt.Fprint(bf, color.New(color.BgRed, color.FgHiWhite).Sprint("ERROR"))
 	}
-	fmt.Fprint(&bf, " ")
+	fmt.Fprint(bf, " ")
 
 	if h.opts.SrcFileMode != Nop {
 		if r.PC != 0 {
@@ -93,7 +93,7 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 				lenStr := strconv.Itoa(h.opts.SrcFileLength)
 				formatted = fmt.Sprintf("%-"+lenStr+"s", filename+lineStr)
 			}
-			fmt.Fprint(&bf, formatted)
+			fmt.Fprint(bf, formatted)
 		}
 	}
 
@@ -105,7 +105,7 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 		return true
 	})
 
-	fmt.Fprint(&bf, h.opts.MsgPrefix)
+	fmt.Fprint(bf, h.opts.MsgPrefix)
 	formattedMessage := r.Message
 	if h.opts.MsgLength > 0 && len(attrs) > 0 {
 		if len(formattedMessage) > h.opts.MsgLength {
@@ -119,29 +119,31 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 	if h.opts.MsgColor == nil {
 		h.opts.MsgColor = color.New() //set to empty otherwise we have a null pointer
 	}
-	fmt.Fprintf(&bf, "%s", h.opts.MsgColor.Sprint(formattedMessage))
+	fmt.Fprintf(bf, "%s", h.opts.MsgColor.Sprint(formattedMessage))
 
 	for _, a := range attrs {
-		fmt.Fprint(&bf, " ")
+		fmt.Fprint(bf, " ")
 		for i, g := range h.groups {
-			fmt.Fprint(&bf, color.New(color.FgCyan).Sprint(g))
+			fmt.Fprint(bf, color.New(color.FgCyan).Sprint(g))
 			if i != len(h.groups) {
-				fmt.Fprint(&bf, color.New(color.FgCyan).Sprint("."))
+				fmt.Fprint(bf, color.New(color.FgCyan).Sprint("."))
 			}
 		}
 
 		if strings.Contains(a.Key, "err") {
-			fmt.Fprint(&bf, color.New(color.FgRed).Sprintf("%s=", a.Key)+a.Value.String())
+			fmt.Fprint(bf, color.New(color.FgRed).Sprintf("%s=", a.Key)+a.Value.String())
 		} else {
-			fmt.Fprint(&bf, color.New(color.FgCyan).Sprintf("%s=", a.Key)+a.Value.String())
+			fmt.Fprint(bf, color.New(color.FgCyan).Sprintf("%s=", a.Key)+a.Value.String())
 		}
 	}
 
-	fmt.Fprint(&bf, "\n")
+	fmt.Fprint(bf, "\n")
 
 	h.mu.Lock()
-	_, err := io.Copy(h.out, &bf)
+	_, err := io.Copy(h.out, bf)
 	h.mu.Unlock()
+
+	freeBuffer(bf)
 
 	return err
 }
