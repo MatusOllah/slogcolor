@@ -24,22 +24,22 @@ type Options struct {
 	// If nil, the Handler uses [slog.LevelInfo].
 	Level slog.Leveler
 
-	// The time format.
+	// TimeFormat is the time format.
 	TimeFormat string
 
 	// SrcFileMode is the source file mode.
 	SrcFileMode SourceFileMode
 
-	// SrcFileLength to show fixed length filename to line up the log output, default 0 shows complete filename
+	// SrcFileLength to show fixed length filename to line up the log output, default 0 shows complete filename.
 	SrcFileLength int
 
-	// MsgPrefix to show prefix before message, default: white colored "| "
+	// MsgPrefix to show prefix before message, default: white colored "| ".
 	MsgPrefix string
 
-	// MsgColor is the color of the message, default to empty
+	// MsgColor is the color of the message, default to empty.
 	MsgColor *color.Color
 
-	// MsgLength to show fixed length message to line up the log output, default 0 shows complete message
+	// MsgLength to show fixed length message to line up the log output, default 0 shows complete message.
 	MsgLength int
 
 	// NoColor disables color, default: false.
