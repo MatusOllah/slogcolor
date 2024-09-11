@@ -4,7 +4,8 @@
 
 ![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
 
-**slogcolor** is a color handler for `log/slog`. It's output is inspired by XMRig and zerolog.
+**slogcolor** is a little, customizable color handler for `log/slog`. It enhances log readability by color-coding log levels and supports flexible formatting options.
+It's output is inspired by XMRig and zerolog.
 
 ## Basic Usage
 
@@ -21,6 +22,7 @@ import (
 )
 
 func main() {
+    // Configure slog to use slogcolor by default for colored output
     slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, slogcolor.DefaultOptions)))
 
     slog.Info("Initializing")
@@ -55,7 +57,7 @@ slog.Info(slogcolor.Prefix("SceneController", "switching scene"))
 
 ### Disable colors
 
-Colors are enabled by default but can be disabled using `Options.NoColor`. Particularly useful for automatically enabling colors based on based on the terminal capabilities using e.g. the [`go-isatty`](https://github.com/mattn/go-isatty) package.
+Colors are enabled by default but can be disabled using `Options.NoColor`. Particularly useful for automatically enabling colors based on the terminal capabilities using e.g. the [`go-isatty`](https://github.com/mattn/go-isatty) package.
 
 ```go
 w := os.Stderr
