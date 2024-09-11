@@ -5,7 +5,7 @@
 ![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
 
 **slogcolor** is a little, customizable color handler for `log/slog`. It enhances log readability by color-coding log levels and supports flexible formatting options.
-It's output is inspired by XMRig and zerolog.
+Its output is inspired by XMRig and zerolog.
 
 ## Basic Usage
 
