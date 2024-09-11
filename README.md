@@ -41,7 +41,6 @@ opts := &slogcolor.Options{
     Level:         slog.LevelDebug,
     TimeFormat:    time.RFC3339,
     SrcFileMode:   slog.Nop,
-    SrcFileLength: 16,
 }
 slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 ```
