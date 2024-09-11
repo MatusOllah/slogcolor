@@ -139,6 +139,10 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 
 	fmt.Fprint(bf, "\n")
 
+	if h.opts.NoColor {
+		stripANSI(bf)
+	}
+
 	h.mu.Lock()
 	_, err := io.Copy(h.out, bf)
 	h.mu.Unlock()

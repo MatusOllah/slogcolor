@@ -1,9 +1,10 @@
 package slogcolor
 
 import (
-	"github.com/fatih/color"
 	"log/slog"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 var DefaultOptions *Options = &Options{
@@ -14,6 +15,7 @@ var DefaultOptions *Options = &Options{
 	MsgPrefix:     color.HiWhiteString("| "),
 	MsgLength:     0,
 	MsgColor:      color.New(),
+	NoColor:       false,
 }
 
 type Options struct {
@@ -39,4 +41,7 @@ type Options struct {
 
 	// MsgLength to show fixed length message to line up the log output, default 0 shows complete message
 	MsgLength int
+
+	// NoColor disables color, default: false.
+	NoColor bool
 }
