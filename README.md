@@ -45,6 +45,17 @@ opts := &slogcolor.Options{
 slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 ```
 
+or like this:
+
+```go
+opts := slogcolor.DefaultOptions
+opts.Level = slog.LevelDebug
+opts.TimeFormat = time.RFC3339
+opts.SrcFileMode = slog.Nop
+
+slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
+```
+
 ### Prefixes
 
 Messages can be prefixed with [`Prefix`](https://pkg.go.dev/github.com/MatusOllah/slogcolor#Prefix) like this:
