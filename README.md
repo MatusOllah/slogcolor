@@ -7,6 +7,14 @@
 **slogcolor** is a little, customizable color handler for `log/slog`. It enhances log readability by color-coding log levels and supports flexible formatting options.
 Its output is inspired by XMRig and zerolog.
 
+## Installation
+
+Run:
+
+```sh
+go get -u github.com/MatusOllah/slogcolor
+```
+
 ## Basic Usage
 
 ```go
@@ -58,11 +66,30 @@ slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 
 ### Prefixes
 
+Prefixes can be useful for adding context to log messages, such as identifying different subsystems or components (e.g., `DB`, `SceneController`, `Network`) that generated the log.
+
 Messages can be prefixed with [`Prefix`](https://pkg.go.dev/github.com/MatusOllah/slogcolor#Prefix) like this:
 
 ```go
 slog.Info(slogcolor.Prefix("MyPrefix", "kajšmentke"))
-slog.Info(slogcolor.Prefix("SceneController", "switching scene"))
+slog.Info(slogcolor.Prefix("SceneController", "switching scene"), "scene", "MainMenuScene")
+
+// or
+
+slog.Info(slogcolor.Prefix("MyPrefix")+"kajšmentke")
+slog.Info(slogcolor.Prefix("SceneController")+"switching scene", "scene", "MainMenuScene")
+```
+
+It can also be used as an alias for ease of use, especially when you frequently use prefixes, like this:
+
+```go
+var P = slogcolor.Prefix
+
+slog.Info(P("MyPrefix", "kajšmentke"))
+
+// or
+
+slog.Info(P("MyPrefix")+"kajšmentke")
 ```
 
 ### Disable colors
@@ -77,3 +104,7 @@ opts.NoColor = !isatty.IsTerminal(w.Fd())
 
 slog.SetDefault(slog.New(slogcolor.NewHandler(w, opts)))
 ```
+
+## License
+
+Licensed under the **MIT License** (see [LICENSE](https://github.com/MatusOllah/slogcolor/blob/main/LICENSE))
