@@ -27,7 +27,9 @@ type Handler struct {
 // NewHandler creates a new Handler.
 func NewHandler(out io.Writer, opts *Options) *Handler {
 	h := &Handler{out: out, mu: &sync.Mutex{}}
-	if opts != nil {
+	if opts == nil {
+		h.opts = *DefaultOptions
+	} else {
 		h.opts = *opts
 	}
 	return h
