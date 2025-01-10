@@ -1,6 +1,6 @@
 # 🌈 slogcolor
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/slogcolor.svg)](https://pkg.go.dev/github.com/MatusOllah/slogcolor) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/slogcolor)](https://goreportcard.com/report/github.com/MatusOllah/slogcolor) [![GitHub license](https://img.shields.io/github/license/MatusOllah/slogcolor)](https://github.com/MatusOllah/slogcolor/blob/main/LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/slogcolor.svg)](https://pkg.go.dev/github.com/MatusOllah/slogcolor) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/slogcolor)](https://goreportcard.com/report/github.com/MatusOllah/slogcolor) [![GitHub license](https://img.shields.io/github/license/MatusOllah/slogcolor)](https://github.com/MatusOllah/slogcolor/blob/main/LICENSE) [![Go](https://github.com/MatusOllah/slogcolor/actions/workflows/go.yml/badge.svg)](https://github.com/MatusOllah/slogcolor/actions/workflows/go.yml)
 
 ![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
 
@@ -39,6 +39,20 @@ func main() {
     slog.Error("DB connection lost!", "err", errors.New("connection reset"), "db", "horalky")
 }
 ```
+
+### Default options
+
+slogcolor provides a set of predefined options to simplify configuration. You can use these default options via [`DefaultOptions`](https://pkg.go.dev/github.com/MatusOllah/slogcolor#DefaultOptions), or simply pass `nil` for the same effect.
+
+```go
+slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, slogcolor.DefaultOptions)))
+
+// or
+
+slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, nil)))
+```
+
+The behavior is identical in both cases, so you can choose based on your coding style or preference.
 
 ### Customized output format
 
@@ -94,7 +108,7 @@ slog.Info(P("MyPrefix")+"kajšmentke")
 
 ### Disable colors
 
-Colors are enabled by default but can be disabled using `Options.NoColor`. Particularly useful for automatically enabling colors based on the terminal capabilities using e.g. the [`go-isatty`](https://github.com/mattn/go-isatty) package.
+Colors are enabled by default but can be disabled using `Options.NoColor`. Particularly useful for automatically enabling colors based on the terminal capabilities using e.g. the [go-isatty](https://github.com/mattn/go-isatty) package.
 
 ```go
 w := os.Stderr
