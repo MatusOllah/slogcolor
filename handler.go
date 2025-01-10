@@ -24,7 +24,7 @@ type Handler struct {
 	out io.Writer
 }
 
-// NewHandler creates a new Handler.
+// NewHandler creates a new Handler with the specified options. If opts is nil, uses [DefaultOptions].
 func NewHandler(out io.Writer, opts *Options) *Handler {
 	h := &Handler{out: out, mu: &sync.Mutex{}}
 	if opts == nil {
