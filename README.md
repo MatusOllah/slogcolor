@@ -1,6 +1,6 @@
 # 🌈 slogcolor
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/slogcolor.svg)](https://pkg.go.dev/github.com/MatusOllah/slogcolor) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/slogcolor)](https://goreportcard.com/report/github.com/MatusOllah/slogcolor) [![GitHub license](https://img.shields.io/github/license/MatusOllah/slogcolor)](https://github.com/MatusOllah/slogcolor/blob/main/LICENSE) [![Go](https://github.com/MatusOllah/slogcolor/actions/workflows/go.yml/badge.svg)](https://github.com/MatusOllah/slogcolor/actions/workflows/go.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/slogcolor.svg)](https://pkg.go.dev/github.com/MatusOllah/slogcolor) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/slogcolor)](https://goreportcard.com/report/github.com/MatusOllah/slogcolor) [![Go](https://github.com/MatusOllah/slogcolor/actions/workflows/go.yml/badge.svg)](https://github.com/MatusOllah/slogcolor/actions/workflows/go.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/slogcolor)](https://github.com/MatusOllah/slogcolor/blob/main/LICENSE) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
 
 ![screenshot](https://github.com/MatusOllah/slogcolor/blob/main/screenshot.png)
 
