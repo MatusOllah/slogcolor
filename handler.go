@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"maps"
 	"path/filepath"
 	"runtime"
 	"strconv"
@@ -32,6 +33,15 @@ func NewHandler(out io.Writer, opts *Options) *Handler {
 	} else {
 		h.opts = *opts
 	}
+
+	tags := maps.Clone(*DefaultLevelTags)
+	if opts.LevelTags != nil {
+		for k, v := range opts.LevelTags {
+			tags[k] = v
+		}
+	}
+	h.opts.LevelTags = tags
+
 	return h
 }
 
@@ -60,16 +70,8 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 		fmt.Fprint(bf, " ")
 	}
 
-	switch r.Level {
-	case slog.LevelDebug:
-		fmt.Fprint(bf, color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"))
-	case slog.LevelInfo:
-		fmt.Fprint(bf, color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO "))
-	case slog.LevelWarn:
-		fmt.Fprint(bf, color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN "))
-	case slog.LevelError:
-		fmt.Fprint(bf, color.New(color.BgRed, color.FgHiWhite).Sprint("ERROR"))
-	}
+	fmt.Fprint(bf, h.opts.LevelTags[r.Level])
+
 	fmt.Fprint(bf, " ")
 
 	if h.opts.SrcFileMode != Nop {
@@ -99,7 +101,7 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 		}
 	}
 
-	//we need the attributes here, as we can print a longer string if there are no attributes
+	// we need the attributes here, as we can print a longer string if there are no attributes
 	var attrs []slog.Attr
 	attrs = append(attrs, h.attrs...)
 	r.Attrs(func(a slog.Attr) bool {
@@ -119,7 +121,7 @@ func (h *Handler) Handle(_ context.Context, r slog.Record) error {
 		}
 	}
 	if h.opts.MsgColor == nil {
-		h.opts.MsgColor = color.New() //set to empty otherwise we have a null pointer
+		h.opts.MsgColor = color.New() // set to empty otherwise we have a null pointer
 	}
 	fmt.Fprintf(bf, "%s", h.opts.MsgColor.Sprint(formattedMessage))
 
