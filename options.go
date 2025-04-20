@@ -7,6 +7,13 @@ import (
 	"github.com/fatih/color"
 )
 
+var DefaultLevelTags = &map[slog.Level]string{
+	slog.LevelDebug: color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"),
+	slog.LevelInfo:  color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO"),
+	slog.LevelWarn:  color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN"),
+	slog.LevelError: color.New(color.BgRed, color.FgHiWhite).Sprint("ERROR"),
+}
+
 var DefaultOptions *Options = &Options{
 	Level:         slog.LevelInfo,
 	TimeFormat:    time.DateTime,
@@ -44,4 +51,7 @@ type Options struct {
 
 	// NoColor disables color, default: false.
 	NoColor bool
+
+	// LevelTags is level tag for message, default: DefaultLevelStyles
+	LevelTags map[slog.Level]string
 }
