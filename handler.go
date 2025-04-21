@@ -34,7 +34,7 @@ func NewHandler(out io.Writer, opts *Options) *Handler {
 		h.opts = *opts
 	}
 
-	tags := maps.Clone(*DefaultLevelTags)
+	tags := maps.Clone(DefaultLevelTags)
 	if opts.LevelTags != nil {
 		for k, v := range opts.LevelTags {
 			tags[k] = v

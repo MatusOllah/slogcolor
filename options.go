@@ -7,7 +7,7 @@ import (
 	"github.com/fatih/color"
 )
 
-var DefaultLevelTags = &map[slog.Level]string{
+var DefaultLevelTags = map[slog.Level]string{
 	slog.LevelDebug: color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"),
 	slog.LevelInfo:  color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO "),
 	slog.LevelWarn:  color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN "),
@@ -23,6 +23,7 @@ var DefaultOptions *Options = &Options{
 	MsgLength:     0,
 	MsgColor:      color.New(),
 	NoColor:       false,
+	LevelTags:     DefaultLevelTags,
 }
 
 type Options struct {
