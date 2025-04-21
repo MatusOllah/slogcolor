@@ -4,11 +4,11 @@ Thank you for your interest in contributing to slogcolor! We welcome contributio
 
 ## Languages
 
-Please write issues and pull requests in **English** or **Slovak**. Thank you!
+Please write issues and pull requests in **English**, **Czech** or **Slovak**. Thank you!
 
 ---
 
-Prosím, píšte issues a pull requests buď v **angličtine**, alebo v **slovenčine**. Ďakujeme!
+Prosím, píšte issues a pull requests buď v **angličtine**, **češtine** alebo v **slovenčine**. Ďakujeme!
 
 ## How to contribute
 
