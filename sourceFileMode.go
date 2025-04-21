@@ -9,6 +9,6 @@ const (
 	// ShortFile produces only the filename (for example main.go:69).
 	ShortFile
 
-	// LongFile produces the full file path (for example /home/frajer/go/src/myapp/main.go:69).
+	// LongFile produces the full file path (for example /home/user/go/src/myapp/main.go:69).
 	LongFile
 )

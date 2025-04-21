@@ -7,6 +7,7 @@ import (
 	"github.com/fatih/color"
 )
 
+// DefaultLevelTags are the default level tags.
 var DefaultLevelTags = map[slog.Level]string{
 	slog.LevelDebug: color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"),
 	slog.LevelInfo:  color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO "),
@@ -14,6 +15,7 @@ var DefaultLevelTags = map[slog.Level]string{
 	slog.LevelError: color.New(color.BgRed, color.FgHiWhite).Sprint("ERROR"),
 }
 
+// DefaultOptions are the default options.
 var DefaultOptions *Options = &Options{
 	Level:         slog.LevelInfo,
 	TimeFormat:    time.DateTime,
@@ -26,6 +28,7 @@ var DefaultOptions *Options = &Options{
 	LevelTags:     DefaultLevelTags,
 }
 
+// Options represents the options passed into [NewHandler].
 type Options struct {
 	// Level reports the minimum level to log.
 	// Levels with lower levels are discarded.

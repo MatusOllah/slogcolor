@@ -15,6 +15,7 @@ import (
 	"github.com/fatih/color"
 )
 
+// Handler is a colored slog handler.
 type Handler struct {
 	groups []string
 	attrs  []slog.Attr
@@ -25,7 +26,7 @@ type Handler struct {
 	out io.Writer
 }
 
-// NewHandler creates a new Handler with the specified options. If opts is nil, uses [DefaultOptions].
+// NewHandler creates a new [Handler] with the specified options. If opts is nil, uses [DefaultOptions].
 func NewHandler(out io.Writer, opts *Options) *Handler {
 	h := &Handler{out: out, mu: &sync.Mutex{}}
 	if opts == nil {
