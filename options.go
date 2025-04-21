@@ -9,8 +9,8 @@ import (
 
 var DefaultLevelTags = &map[slog.Level]string{
 	slog.LevelDebug: color.New(color.BgCyan, color.FgHiWhite).Sprint("DEBUG"),
-	slog.LevelInfo:  color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO"),
-	slog.LevelWarn:  color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN"),
+	slog.LevelInfo:  color.New(color.BgGreen, color.FgHiWhite).Sprint("INFO "),
+	slog.LevelWarn:  color.New(color.BgYellow, color.FgHiWhite).Sprint("WARN "),
 	slog.LevelError: color.New(color.BgRed, color.FgHiWhite).Sprint("ERROR"),
 }
 
